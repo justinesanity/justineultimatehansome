@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tap Me</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body{
+    overflow:hidden;
+    background:black;
+}
+
+/* MAIN PAGE */
+#main{
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:radial-gradient(circle at center,#F5276C,#020617);
+    color:white;
+    opacity:0;
+    transition:1s;
+    padding:20px;
+}
+
+#main.show{
+    opacity:1;
+}
+
+/* DOORS */
+.door{
+    position:fixed;
+    top:0;
+    width:50%;
+    height:100%;
+    background:#020617;
+    z-index:10;
+    transition:1.3s cubic-bezier(.77,0,.18,1);
+}
+
+#left{ left:0; border-right:1px solid #111;}
+#right{ right:0; border-left:1px solid #111;}
+
+.open #left{ transform:translateX(-100%);}
+.open #right{ transform:translateX(100%);}
+
+/* ENTER TEXT */
+.enter{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    color:white;
+    font-size:clamp(24px,6vw,48px);
+    letter-spacing:6px;
+    cursor:pointer;
+    z-index:11;
+    transition:.3s;
+    text-align:center;
+}
+
+.enter small{
+    display:block;
+    font-size:12px;
+    letter-spacing:2px;
+    margin-top:10px;
+    opacity:.7;
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+    0%{opacity:.2;}
+    50%{opacity:1;}
+    100%{opacity:.2;}
+}
+
+.enter:hover{
+    letter-spacing:12px;
+    color:#22c55e;
+    text-shadow:0 0 25px #22c55e;
+}
+
+/* CONTENT CARD */
+.card{
+    text-align:center;
+    padding:30px;
+    background:rgba(255,255,255,0.05);
+    border-radius:20px;
+    backdrop-filter:blur(12px);
+    max-width:90%;
+}
+
+h1{
+    font-size:clamp(28px,7vw,55px);
+    margin-bottom:15px;
+}
+
+p{
+    font-size:clamp(16px,4vw,22px);
+}
+
+</style>
+</head>
+<body>
+
+<!-- music -->
+<audio id="music" src="music.mp3"></audio>
+
+<div id="left" class="door"></div>
+<div id="right" class="door"></div>
+
+<div class="enter" onclick="openDoor()">
+    TUPLOKA
+    <small>tap the screen</small>
+</div>
+
+<div id="main">
+    <div class="card">
+        <h1>HAPPY ❤️ VALENTINES</h1>
+        <p>KEEP LIVING 😘</p>
+    </div>
+</div>
+
+<script>
+function openDoor(){
+    document.body.classList.add("open");
+    document.querySelector(".enter").style.opacity="0";
+
+    document.getElementById("music").play();
+
+    setTimeout(()=>{
+        document.getElementById("main").classList.add("show");
+    },900);
+}
+
+/* allow tapping anywhere */
+document.body.addEventListener("click", openDoor, {once:true});
+</script>
+
+</body>
+</html>
